@@ -5,7 +5,12 @@ import { PrismaClient } from '@prisma/client';
 @Injectable()
 export class PrismaService extends PrismaClient implements OnModuleInit {
     constructor() {
-        const pool = new PrismaPg({ connectionString: process.env.DATABASE_URL! });
+        const url = process.env.DATABASE_URL!;
+        if (!url) {
+            throw new Error('DATABASE_URL is not defined in .env');
+        }
+        console.info(`This is Connection "${url}"`);
+        const pool = new PrismaPg({ connectionString: url });
         super({ adapter: pool });
     }
     async onModuleInit() {
