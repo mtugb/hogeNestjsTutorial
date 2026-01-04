@@ -18,7 +18,7 @@ export class HogeController {
 
     @Get('create')
     async createHoge(@Query('title') title: string) {
-        this.hogeService.createHoge(title);
+        await this.hogeService.createHoge(title);
         return {
             successful: true
         }
